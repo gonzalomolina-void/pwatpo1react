@@ -3,9 +3,9 @@
 ## Carátula - Datos del Grupo
 *   **Facultad de Informática - Programación Web Avanzada**
 *   **Integrantes:**
-    *   Juan Cruz Espinosza - FAI-4767
-    *   Lautaro Mellado - FAI-2659
-    *   Gonzalo Molina - 42524
+    *   Juan Cruz Espinosza - FAI-4767 - Developer
+    *   Lautaro Mellado - FAI-2659 - Developer
+    *   Gonzalo Molina - 42524 - PM
 *   **Tablero Kanban:** [\[Link al tablero\]](https://github.com/users/gonzalomolina-void/projects/1)
 
 ---
