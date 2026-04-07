@@ -1,14 +1,28 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Titulo from '../../components/Titulo/Titulo';
 import FormularioContenido from '../../components/FormularioContenido/FormularioContenido';
+import storageService from '../../services/storageService';
 import './Home.css';
 
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [items, setItems] = useState([]);
+
+  // Cargar datos iniciales desde LocalStorage
+  useEffect(() => {
+    const data = storageService.getAll();
+    setItems(data);
+  }, []);
 
   const handleAddContent = (nuevoContenido) => {
-    console.log('Nuevo contenido registrado:', nuevoContenido);
-    // La persistencia se implementará en la US11
+    // Añadir estado por defecto para la US3/US4
+    const itemConEstado = {
+      ...nuevoContenido,
+      estado: 'Por Ver'
+    };
+
+    const updatedItems = storageService.add(itemConEstado);
+    setItems(updatedItems);
   };
 
   return (
