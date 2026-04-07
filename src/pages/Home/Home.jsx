@@ -1,15 +1,27 @@
 import { useState } from 'react';
 import Titulo from '../../components/Titulo/Titulo';
 import FormularioContenido from '../../components/FormularioContenido/FormularioContenido';
+import ListaContenido from '../../components/ListaContenido/ListaContenido';
 import './Home.css';
 
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [contenido, setContenido] = useState([]);
 
   const handleAddContent = (nuevoContenido) => {
     console.log('Nuevo contenido registrado:', nuevoContenido);
+    const contenidoConEstado = {
+      ...nuevoContenido,
+      vista: false
+    };
+    
+    setContenido([...contenido, contenidoConEstado]);
     // La persistencia se implementará en la US11
   };
+
+  const porVer = contenido.filter(item => item.vista === false);
+  const vistas = contenido.filter(item => item.vista === true);
+    
 
   return (
     <main className="home-container">
@@ -30,7 +42,10 @@ const Home = () => {
         onAddContent={handleAddContent} 
       />
 
-      {/* Aquí irá el resto del contenido en futuras US */}
+      <section className="listas-section">
+        <ListaContenido titulo="Por Ver" items={porVer} />
+        <ListaContenido titulo="Vistos" items={vistas} />
+      </section>
     </main>
   );
 };
