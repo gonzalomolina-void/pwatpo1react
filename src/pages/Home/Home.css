@@ -33,3 +33,18 @@
 .btn-primary:active {
   transform: translateY(0);
 }
+
+.home-stats {
+  margin-top: 3rem;
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  border: 1px solid #eee;
+  display: inline-block;
+}
+
+.home-stats p {
+  font-size: 1.1rem;
+  color: #666;
+  margin: 0;
+}

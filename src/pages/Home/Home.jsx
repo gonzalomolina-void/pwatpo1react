@@ -8,20 +8,23 @@ const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [items, setItems] = useState([]);
 
-  // Cargar datos iniciales desde LocalStorage
+  // Cargar datos iniciales desde el servicio (asíncrono)
   useEffect(() => {
-    const data = storageService.getAll();
-    setItems(data);
+    const fetchData = async () => {
+      const data = await storageService.getAll();
+      setItems(data);
+    };
+    fetchData();
   }, []);
 
-  const handleAddContent = (nuevoContenido) => {
+  const handleAddContent = async (nuevoContenido) => {
     // Añadir estado por defecto para la US3/US4
     const itemConEstado = {
       ...nuevoContenido,
       estado: 'Por Ver'
     };
 
-    const updatedItems = storageService.add(itemConEstado);
+    const updatedItems = await storageService.add(itemConEstado);
     setItems(updatedItems);
   };
 
@@ -44,7 +47,9 @@ const Home = () => {
         onAddContent={handleAddContent} 
       />
 
-      {/* Aquí irá el resto del contenido en futuras US */}
+      <section className="home-stats">
+        <p>Total de contenidos: {items.length}</p>
+      </section>
     </main>
   );
 };

@@ -1,72 +1,45 @@
-const STORAGE_KEY = 'pwatpo1_content';
+import localStorageDriver from './drivers/localStorageDriver';
 
 /**
- * Servicio para gestionar la persistencia de datos en LocalStorage.
+ * Servicio genérico para la gestión de datos.
+ * Actúa como un puente (bridge) hacia el driver de persistencia configurado.
+ * 
+ * Para cambiar el método de persistencia (ej: a una API con Axios),
+ * simplemente se debe importar y asignar un driver diferente.
  */
+
+// Aquí se podría configurar dinámicamente qué driver usar
+const driver = localStorageDriver;
+
 const storageService = {
   /**
    * Obtiene todos los elementos almacenados.
-   * @returns {Array} Lista de películas y series.
    */
-  getAll: () => {
-    try {
-      const data = localStorage.getItem(STORAGE_KEY);
-      return data ? JSON.parse(data) : [];
-    } catch (error) {
-      console.error('Error al leer de LocalStorage:', error);
-      return [];
-    }
-  },
+  getAll: () => driver.getAll(),
 
   /**
    * Guarda la lista completa de elementos.
    * @param {Array} items - La lista de elementos a guardar.
    */
-  saveAll: (items) => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-    } catch (error) {
-      console.error('Error al guardar en LocalStorage:', error);
-    }
-  },
+  saveAll: (items) => driver.saveAll(items),
 
   /**
-   * Agrega un nuevo elemento a la lista.
-   * @param {Object} item - El nuevo elemento (película o serie).
-   * @returns {Array} La lista actualizada.
+   * Agrega un nuevo elemento.
+   * @param {Object} item - El nuevo elemento.
    */
-  add: (item) => {
-    const items = storageService.getAll();
-    const newItems = [...items, item];
-    storageService.saveAll(newItems);
-    return newItems;
-  },
+  add: (item) => driver.add(item),
 
   /**
    * Elimina un elemento por su ID.
    * @param {string} id - El ID del elemento a eliminar.
-   * @returns {Array} La lista actualizada.
    */
-  remove: (id) => {
-    const items = storageService.getAll();
-    const newItems = items.filter(item => item.id !== id);
-    storageService.saveAll(newItems);
-    return newItems;
-  },
+  remove: (id) => driver.remove(id),
 
   /**
    * Actualiza un elemento existente.
    * @param {Object} updatedItem - El elemento con los datos actualizados.
-   * @returns {Array} La lista actualizada.
    */
-  update: (updatedItem) => {
-    const items = storageService.getAll();
-    const newItems = items.map(item => 
-      item.id === updatedItem.id ? { ...item, ...updatedItem } : item
-    );
-    storageService.saveAll(newItems);
-    return newItems;
-  }
+  update: (updatedItem) => driver.update(updatedItem)
 };
 
 export default storageService;
