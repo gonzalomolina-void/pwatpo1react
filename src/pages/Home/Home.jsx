@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Titulo from '../../components/Titulo/Titulo';
 import FormularioContenido from '../../components/FormularioContenido/FormularioContenido';
+import ListaContenido from '../../components/ListaContenido/ListaContenido';
 import storageService from '../../services/storageService';
 import './Home.css';
 
@@ -28,6 +29,10 @@ const Home = () => {
     setItems(updatedItems);
   };
 
+  const porVer = contenido.filter(item => item.vista === false);
+  const vistas = contenido.filter(item => item.vista === true);
+    
+
   return (
     <main className="home-container">
       <Titulo text="Gestor de Películas y Series" />
@@ -47,8 +52,9 @@ const Home = () => {
         onAddContent={handleAddContent} 
       />
 
-      <section className="home-stats">
-        <p>Total de contenidos: {items.length}</p>
+      <section className="listas-section">
+        <ListaContenido titulo="Por Ver" items={porVer} />
+        <ListaContenido titulo="Vistos" items={vistas} />
       </section>
     </main>
   );
