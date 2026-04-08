@@ -7,13 +7,13 @@ import './Home.css';
 
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [items, setItems] = useState([]);
+  const [contenido, setContenido] = useState([]);
 
   // Cargar datos iniciales desde el servicio (asíncrono)
   useEffect(() => {
     const fetchData = async () => {
       const data = await storageService.getAll();
-      setItems(data);
+      setContenido(data);
     };
     fetchData();
   }, []);
@@ -22,16 +22,15 @@ const Home = () => {
     // Añadir estado por defecto para la US3/US4
     const itemConEstado = {
       ...nuevoContenido,
-      estado: 'Por Ver'
+      vista: false
     };
 
     const updatedItems = await storageService.add(itemConEstado);
-    setItems(updatedItems);
+    setContenido(updatedItems);
   };
 
-  const porVer = contenido.filter(item => item.vista === false);
-  const vistas = contenido.filter(item => item.vista === true);
-    
+  const porVer = contenido.filter(item => !item.vista);
+  const vistas = contenido.filter(item => item.vista);
 
   return (
     <main className="home-container">
