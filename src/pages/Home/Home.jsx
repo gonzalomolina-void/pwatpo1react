@@ -29,6 +29,16 @@ const Home = () => {
     setContenido(updatedItems);
   };
 
+  const handleToggleVisto = async (item) => {
+    const itemActualizado = {
+      ...item,
+      vista: !item.vista
+    };
+
+    const updatedItems = await storageService.update(itemActualizado);
+    setContenido(updatedItems);
+  };
+
   const porVer = contenido.filter(item => !item.vista);
   const vistas = contenido.filter(item => item.vista);
 
@@ -52,8 +62,16 @@ const Home = () => {
       />
 
       <section className="listas-section">
-        <ListaContenido titulo="Por Ver" items={porVer} />
-        <ListaContenido titulo="Vistos" items={vistas} />
+        <ListaContenido 
+          titulo="Por Ver" 
+          items={porVer} 
+          onToggle={handleToggleVisto} 
+        />
+        <ListaContenido 
+          titulo="Vistos" 
+          items={vistas} 
+          onToggle={handleToggleVisto} 
+        />
       </section>
     </main>
   );
