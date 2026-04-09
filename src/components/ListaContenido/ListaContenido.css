@@ -67,3 +67,18 @@
   font-weight: bold;
   color: #ffca28;
 }
+
+.btn-toggle {
+  background-color: transparent;
+  border: 1px solid #646cff;
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+
+.btn-toggle:hover {
+  background-color: rgba(100, 108, 255, 0.2);
+}

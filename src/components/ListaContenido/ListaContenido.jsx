@@ -1,6 +1,6 @@
 import './ListaContenido.css';
 
-const ListaContenido = ({ titulo, items }) => {
+const ListaContenido = ({ titulo, items, onToggle }) => {
   return (
     <div className="lista-contenedor">
       <h2>{titulo}</h2>
@@ -15,6 +15,7 @@ const ListaContenido = ({ titulo, items }) => {
               <th>Director</th>
               <th>Género</th>
               <th>Rating</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -27,6 +28,14 @@ const ListaContenido = ({ titulo, items }) => {
                   <span className="item-genero">{item.genero}</span>
                 </td>
                 <td className="item-rating">{item.rating}</td>
+                <td>
+                  <button 
+                    className="btn-toggle" 
+                    onClick={() => onToggle(item)}
+                  >
+                    {item.vista ? 'Pendiente' : 'Visto'}
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
