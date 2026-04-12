@@ -40,7 +40,7 @@ const Home = () => {
   };
 
   const handleDeleteContent = async (id) => {
-    const confirmacion = window.confirm("¿Esta seguro de que desea eliminar este contenido?");
+    const confirmacion = window.confirm("¿Está seguro de que desea eliminar este contenido?");
     
     if (confirmacion) {
       await storageService.remove(id);
@@ -53,7 +53,7 @@ const Home = () => {
 
   return (
     <main className="home-container">
-      <Titulo text="Gestor de Peliculas y Series" />
+      <Titulo text="Gestor de Películas y Series" />
       
       <div className="home-actions">
         <button 
