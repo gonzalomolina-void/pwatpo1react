@@ -1,6 +1,6 @@
 import './ListaContenido.css';
 
-const ListaContenido = ({ titulo, items, onToggle }) => {
+const ListaContenido = ({ titulo, items, onToggle, onDelete }) => {
   return (
     <div className="lista-contenedor">
       <h2>{titulo}</h2>
@@ -28,12 +28,18 @@ const ListaContenido = ({ titulo, items, onToggle }) => {
                   <span className="item-genero">{item.genero}</span>
                 </td>
                 <td className="item-rating">{item.rating}</td>
-                <td>
+                <td className="acciones-celda">
                   <button 
                     className="btn-toggle" 
                     onClick={() => onToggle(item)}
                   >
                     {item.vista ? 'Pendiente' : 'Visto'}
+                  </button>
+                  <button 
+                    className="btn-delete" 
+                    onClick={() => onDelete(item.id)}
+                  >
+                    Eliminar
                   </button>
                 </td>
               </tr>
