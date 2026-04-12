@@ -39,6 +39,15 @@ const Home = () => {
     setContenido(updatedItems);
   };
 
+  const handleDeleteContent = async (id) => {
+    const confirmacion = window.confirm("¿Está seguro de que desea eliminar este contenido?");
+    
+    if (confirmacion) {
+      await storageService.remove(id);
+      setContenido(contenido.filter(item => item.id !== id));
+    }
+  };
+
   const porVer = contenido.filter(item => !item.vista);
   const vistas = contenido.filter(item => item.vista);
 
@@ -66,11 +75,13 @@ const Home = () => {
           titulo="Por Ver" 
           items={porVer} 
           onToggle={handleToggleVisto} 
+          onDelete={handleDeleteContent}
         />
         <ListaContenido 
           titulo="Vistos" 
           items={vistas} 
           onToggle={handleToggleVisto} 
+          onDelete={handleDeleteContent}
         />
       </section>
     </main>

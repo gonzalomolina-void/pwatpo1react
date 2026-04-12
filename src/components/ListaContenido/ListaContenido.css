@@ -82,3 +82,24 @@
 .btn-toggle:hover {
   background-color: rgba(100, 108, 255, 0.2);
 }
+
+.acciones-celda {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.btn-delete {
+  background-color: transparent;
+  border: 1px solid #ef4444;
+  color: #ef4444;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+
+.btn-delete:hover {
+  background-color: rgba(239, 68, 68, 0.1);
+}
