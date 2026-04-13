@@ -1,11 +1,23 @@
 import './ListaContenido.css';
 
-const ListaContenido = ({ titulo, items, onToggle, onDelete, onEdit }) => {
+const ListaContenido = ({ titulo, items, onToggle, onDelete, onEdit, emptyMessage, onClearFilters, isFiltering }) => {
   return (
     <div className="lista-contenedor">
       <h2>{titulo}</h2>
       {items.length === 0 ? (
-        <p className="mensaje-vacio">La lista está vacía.</p>
+        <div className="mensaje-vacio-container">
+          <p className="mensaje-vacio">
+            {emptyMessage || "No hay contenido en esta lista."}
+          </p>
+          {isFiltering && onClearFilters && (
+            <button 
+              className="btn-clear-filters" 
+              onClick={onClearFilters}
+            >
+              Limpiar filtros
+            </button>
+          )}
+        </div>
       ) : (
         <table className="tabla-contenido">
           <thead>

@@ -13,6 +13,19 @@ const Home = () => {
   const [itemAEditar, setItemAEditar] = useState(null);
   const [contenido, setContenido] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedGenre, setSelectedGenre] = useState('');
+  const [selectedType, setSelectedType] = useState('');
+
+  const generos = [
+    'Acción',
+    'Comedia',
+    'Drama',
+    'Ciencia Ficción',
+    'Terror',
+    'Romance',
+    'Documental',
+    'Animación'
+  ];
 
   // Cargar datos iniciales desde el servicio (asíncrono)
   useEffect(() => {
@@ -57,32 +70,71 @@ const Home = () => {
     setItemAEditar(item);
   };
   
-  // Lógica de filtrado memorizada para la US 7
+  // Lógica de filtrado memorizada para US 7, US 8 y US 12
   const { porVer, vistas } = useMemo(() => {
     const term = searchTerm.trim().toLowerCase();
     
-    const filtered = contenido.filter(item => 
-      term === '' ||
-      item.titulo.toLowerCase().includes(term) ||
-      item.director.toLowerCase().includes(term)
-    );
+    const filtered = contenido.filter(item => {
+      const matchesSearch = term === '' || 
+        item.titulo.toLowerCase().includes(term) || 
+        item.director.toLowerCase().includes(term);
+      
+      const matchesGenre = selectedGenre === '' || item.genero === selectedGenre;
+      const matchesType = selectedType === '' || item.tipo === selectedType;
+
+      return matchesSearch && matchesGenre && matchesType;
+    });
 
     return {
       porVer: filtered.filter(item => !item.vista),
       vistas: filtered.filter(item => item.vista)
     };
-  }, [contenido, searchTerm]);
+  }, [contenido, searchTerm, selectedGenre, selectedType]);
+
+  const isFiltering = searchTerm.trim() !== '' || selectedGenre !== '' || selectedType !== '';
+
+  const handleClearFilters = () => {
+    setSearchTerm('');
+    setSelectedGenre('');
+    setSelectedType('');
+  };
 
   return (
     <main className="home-container">
       <Titulo text="Gestor de Películas y Series" />
       
       <div className="home-actions">
-        <SearchBar 
-          value={searchTerm}
-          onChange={setSearchTerm}
-          placeholder="Buscar por título o director..."
-        />
+        <div className="search-filters-container">
+          <SearchBar 
+            value={searchTerm}
+            onChange={setSearchTerm}
+            placeholder="Buscar por título o director..."
+          />
+          
+          <div className="filters-row">
+            <select 
+              value={selectedGenre} 
+              onChange={(e) => setSelectedGenre(e.target.value)}
+              className="filter-select"
+            >
+              <option value="">Todos los géneros</option>
+              {generos.map(g => (
+                <option key={g} value={g}>{g}</option>
+              ))}
+            </select>
+
+            <select 
+              value={selectedType} 
+              onChange={(e) => setSelectedType(e.target.value)}
+              className="filter-select"
+            >
+              <option value="">Todos los tipos</option>
+              <option value="Película">Películas</option>
+              <option value="Serie">Series</option>
+            </select>
+          </div>
+        </div>
+
         <div className="add-container">
           <button 
             className="btn-primary" 
@@ -115,6 +167,9 @@ const Home = () => {
           onToggle={handleToggleVisto} 
           onDelete={handleDeleteContent}
           onEdit={handleOpenEdit}
+          emptyMessage={isFiltering ? "No se encontraron coincidencias en esta lista." : "No tienes contenido pendiente por ver."}
+          isFiltering={isFiltering}
+          onClearFilters={handleClearFilters}
         />
         <ListaContenido 
           titulo="Vistos" 
@@ -122,6 +177,9 @@ const Home = () => {
           onToggle={handleToggleVisto} 
           onDelete={handleDeleteContent}
           onEdit={handleOpenEdit}
+          emptyMessage={isFiltering ? "No se encontraron coincidencias en esta lista." : "No tienes contenido marcado como visto."}
+          isFiltering={isFiltering}
+          onClearFilters={handleClearFilters}
         />
       </section>
     </main>
