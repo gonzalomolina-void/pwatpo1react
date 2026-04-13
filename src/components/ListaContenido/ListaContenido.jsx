@@ -1,6 +1,6 @@
 import './ListaContenido.css';
 
-const ListaContenido = ({ titulo, items, onToggle, onDelete }) => {
+const ListaContenido = ({ titulo, items, onToggle, onDelete, onEdit }) => {
   return (
     <div className="lista-contenedor">
       <h2>{titulo}</h2>
@@ -34,6 +34,12 @@ const ListaContenido = ({ titulo, items, onToggle, onDelete }) => {
                     onClick={() => onToggle(item)}
                   >
                     {item.vista ? 'Pendiente' : 'Visto'}
+                  </button>
+                  <button 
+                    className="btn-edit" 
+                    onClick={() => onEdit(item)}
+                  >
+                    Editar
                   </button>
                   <button 
                     className="btn-delete" 
