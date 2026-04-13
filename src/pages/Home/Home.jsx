@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Titulo from '../../components/Titulo/Titulo';
 import FormularioContenido from '../../components/FormularioContenido/FormularioContenido';
 import ListaContenido from '../../components/ListaContenido/ListaContenido';
+import ResumenEstadisticas from '../../components/ResumenEstadisticas/ResumenEstadisticas';
 import storageService from '../../services/storageService';
 import './Home.css';
 
@@ -69,6 +70,8 @@ const Home = () => {
         onClose={() => setIsModalOpen(false)} 
         onAddContent={handleAddContent} 
       />
+
+      <ResumenEstadisticas contenido={contenido} />
 
       <section className="listas-section">
         <ListaContenido 
