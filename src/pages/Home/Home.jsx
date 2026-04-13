@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Titulo from '../../components/Titulo/Titulo';
-import FormularioContenido from '../../components/FormularioContenido/FormularioContenido';
+import FormularioAgregar from '../../components/FormularioAgregar/FormularioAgregar';
+import FormularioEditar from '../../components/FormularioEditar/FormularioEditar';
 import ListaContenido from '../../components/ListaContenido/ListaContenido';
 import ResumenEstadisticas from '../../components/ResumenEstadisticas/ResumenEstadisticas';
 import storageService from '../../services/storageService';
@@ -8,6 +9,7 @@ import './Home.css';
 
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [itemAEditar, setItemAEditar] = useState(null);
   const [contenido, setContenido] = useState([]);
 
   // Cargar datos iniciales desde el servicio (asíncrono)
@@ -20,14 +22,14 @@ const Home = () => {
   }, []);
 
   const handleAddContent = async (nuevoContenido) => {
-    // Añadir estado por defecto para la US3/US4
-    const itemConEstado = {
-      ...nuevoContenido,
-      vista: false
-    };
-
-    const updatedItems = await storageService.add(itemConEstado);
+    const updatedItems = await storageService.add(nuevoContenido);
     setContenido(updatedItems);
+  };
+
+  const handleUpdateContent = async (itemActualizado) => {
+    const updatedItems = await storageService.update(itemActualizado);
+    setContenido(updatedItems);
+    setItemAEditar(null);
   };
 
   const handleToggleVisto = async (item) => {
@@ -49,6 +51,10 @@ const Home = () => {
     }
   };
 
+  const handleOpenEdit = (item) => {
+    setItemAEditar(item);
+  };
+
   const porVer = contenido.filter(item => !item.vista);
   const vistas = contenido.filter(item => item.vista);
 
@@ -65,10 +71,17 @@ const Home = () => {
         </button>
       </div>
 
-      <FormularioContenido 
+      <FormularioAgregar 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
         onAddContent={handleAddContent} 
+      />
+
+      <FormularioEditar 
+        isOpen={!!itemAEditar}
+        onClose={() => setItemAEditar(null)}
+        item={itemAEditar}
+        onUpdateContent={handleUpdateContent}
       />
 
       <ResumenEstadisticas contenido={contenido} />
@@ -79,12 +92,14 @@ const Home = () => {
           items={porVer} 
           onToggle={handleToggleVisto} 
           onDelete={handleDeleteContent}
+          onEdit={handleOpenEdit}
         />
         <ListaContenido 
           titulo="Vistos" 
           items={vistas} 
           onToggle={handleToggleVisto} 
           onDelete={handleDeleteContent}
+          onEdit={handleOpenEdit}
         />
       </section>
     </main>
