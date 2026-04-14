@@ -1,0 +1,45 @@
+.theme-toggle-container {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 1000;
+}
+
+.theme-toggle-btn {
+  background-color: var(--container-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  font-size: 1.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px var(--card-shadow);
+  transition: all 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+  border-color: var(--accent-color);
+}
+
+.theme-toggle-btn:active {
+  transform: scale(0.9);
+}
+
+/* Ajuste para pantallas pequeñas */
+@media (max-width: 600px) {
+  .theme-toggle-container {
+    top: 1rem;
+    right: 1rem;
+  }
+  
+  .theme-toggle-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+  }
+}
