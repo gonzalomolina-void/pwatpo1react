@@ -17,6 +17,7 @@ const FormularioAgregar = ({ isOpen, onClose, onAddContent }) => {
       title="Agregar Nuevo Contenido"
     >
       <ContentForm 
+        key={isOpen ? 'open' : 'closed'}
         onSubmit={handleAdd} 
         submitText="Guardar Contenido" 
       />

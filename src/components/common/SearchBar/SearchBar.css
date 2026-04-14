@@ -12,17 +12,17 @@
 .search-input {
   width: 100%;
   padding: 1rem 3rem 1rem 1.5rem; /* Padding derecho extra para el botón */
-  border: 2px solid #ddd;
+  border: 2px solid var(--border-color);
   border-radius: 12px;
   font-size: 1.1rem;
-  color: #333;
-  background-color: #fff;
+  color: var(--text-primary);
+  background-color: var(--container-bg);
   transition: all 0.3s ease;
   box-sizing: border-box;
 }
 
 .search-input::placeholder {
-  color: #999;
+  color: var(--text-secondary);
 }
 
 .search-input:focus {

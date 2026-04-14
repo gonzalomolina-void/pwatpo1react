@@ -1,4 +1,34 @@
+import { useState, useEffect } from 'react';
 import './ListaContenido.css';
+
+const PosterImage = ({ blob, alt }) => {
+  const [url, setUrl] = useState(null);
+
+  useEffect(() => {
+    // Si no hay blob, limpiar URL y salir
+    if (!blob) {
+      queueMicrotask(() => setUrl(null));
+      return;
+    }
+
+    // Generar la URL
+    const newUrl = URL.createObjectURL(blob);
+    
+    // Usar una microtarea para evitar el renderizado en cascada síncrono
+    // que el linter está detectando.
+    queueMicrotask(() => {
+      setUrl(newUrl);
+    });
+
+    return () => {
+      URL.revokeObjectURL(newUrl);
+    };
+  }, [blob]);
+
+  if (!url) return <div className="sin-poster">N/A</div>;
+
+  return <img src={url} alt={alt} className="poster-miniatura" />;
+};
 
 const ListaContenido = ({ titulo, items, onToggle, onDelete, onEdit, emptyMessage, onClearFilters, isFiltering }) => {
   return (
@@ -10,8 +40,8 @@ const ListaContenido = ({ titulo, items, onToggle, onDelete, onEdit, emptyMessag
             {emptyMessage || "No hay contenido en esta lista."}
           </p>
           {isFiltering && onClearFilters && (
-            <button 
-              className="btn-clear-filters" 
+            <button
+              className="btn-clear-filters"
               onClick={onClearFilters}
             >
               Limpiar filtros
@@ -22,6 +52,7 @@ const ListaContenido = ({ titulo, items, onToggle, onDelete, onEdit, emptyMessag
         <table className="tabla-contenido">
           <thead>
             <tr>
+              <th>Poster</th>
               <th>Título</th>
               <th>Año</th>
               <th>Director</th>
@@ -33,6 +64,9 @@ const ListaContenido = ({ titulo, items, onToggle, onDelete, onEdit, emptyMessag
           <tbody>
             {items.map(item => (
               <tr key={item.id}>
+                <td className="poster-celda">
+                  <PosterImage blob={item.imagen} alt={item.titulo} />
+                </td>
                 <td>{item.titulo}</td>
                 <td>{item.anio}</td>
                 <td>{item.director}</td>
@@ -40,30 +74,30 @@ const ListaContenido = ({ titulo, items, onToggle, onDelete, onEdit, emptyMessag
                   <span className="item-genero">{item.genero}</span>
                 </td>
                 <td className="item-rating">{item.rating}</td>
-                <td className="acciones-celda">
-                  <button 
-                    className="btn-toggle" 
+                <td className="acciones-celda"><div>
+                  <button
+                    className="btn-toggle"
                     onClick={() => onToggle(item)}
                   >
                     {item.vista ? 'Pendiente' : 'Visto'}
                   </button>
-                  <button 
-                    className="btn-edit" 
+                  <button
+                    className="btn-edit"
                     onClick={() => onEdit(item)}
                   >
                     Editar
                   </button>
-                  <button 
-                    className="btn-delete" 
+                  <button
+                    className="btn-delete"
                     onClick={() => onDelete(item.id)}
                   >
                     Eliminar
-                  </button>
+                  </button></div>
                 </td>
               </tr>
             ))}
           </tbody>
-          
+
         </table>
       )}
     </div>

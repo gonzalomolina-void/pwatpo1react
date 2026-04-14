@@ -14,11 +14,19 @@
 Esta aplicación es un gestor personal de contenidos (películas y series) que permite a los usuarios llevar un seguimiento detallado de lo que desean ver y lo que ya han consumido.
 
 ### Funcionalidades principales:
-*   **Alta de contenido:** Registro de películas/series con título, director, año, género, rating y tipo.
+*   **Alta de contenido:** Registro de películas/series con título, director, año, género, rating, tipo y **carga de imagen (Poster)**.
 *   **Gestión de estados:** Clasificación dinámica entre listas "Por Ver" y "Vistos".
 *   **Filtros y Búsqueda:** Búsqueda por título o director, y filtrado por género y tipo.
+*   **Ordenamiento:** Opciones para ordenar por año y rating (ascendente/descendente).
 *   **Estadísticas:** Contadores dinámicos por lista y por género.
-*   **Persistencia:** Guardado automático de datos en el navegador utilizando `localStorage`.
+*   **Persistencia Avanzada:** Uso de **IndexedDB** para el guardado local, permitiendo almacenar archivos de imagen (Blobs) de forma eficiente y superando el límite de 5MB de `localStorage`.
+
+---
+
+## Persistencia y Almacenamiento
+Siguiendo los requerimientos del TP, la aplicación garantiza que los datos no se pierdan al actualizar la página. Para esto, se implementó un sistema de **drivers** que inicialmente utilizaba `localStorage`, pero que fue evolucionado a **IndexedDB** para soportar la carga de posters de películas. 
+
+*Nota: La aplicación incluye una lógica de migración automática que traslada los datos previos de `localStorage` a la nueva base de datos IndexedDB en el primer inicio.*
 
 ---
 
@@ -66,7 +74,16 @@ Siguiendo las pautas de diseño modular:
 ---
 
 ## Capturas de Pantalla
-*[Se agregarán capturas una vez que la interfaz visual esté completada en las siguientes US]*
+
+A continuación se muestran capturas de la aplicación funcionando en sus diferentes estados y temas:
+
+<div align="center">
+  <img src="images/Screenshot 2026-04-14 112225.png" width="45%" alt="Vista General">
+  <img src="images/Screenshot 2026-04-14 112129.png" width="45%" alt="Modo Oscuro">
+  <br>
+  <img src="images/Screenshot 2026-04-14 112116.png" width="45%" alt="Lista de Contenidos">
+  <img src="images/Screenshot 2026-04-14 112149.png" width="45%" alt="Filtros y Búsqueda">
+</div>
 
 ---
 *Este proyecto fue desarrollado siguiendo los lineamientos de la cátedra de Programación Web Avanzada de la Facultad de Informática.*
