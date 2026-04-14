@@ -1,4 +1,4 @@
-import localStorageDriver from './drivers/localStorageDriver';
+import indexedDbDriver from './drivers/indexedDbDriver';
 
 /**
  * Servicio genérico para la gestión de datos.
@@ -9,7 +9,7 @@ import localStorageDriver from './drivers/localStorageDriver';
  */
 
 // Aquí se podría configurar dinámicamente qué driver usar
-const driver = localStorageDriver;
+const driver = indexedDbDriver;
 
 const storageService = {
   /**

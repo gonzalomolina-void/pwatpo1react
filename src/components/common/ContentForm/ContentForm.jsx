@@ -1,16 +1,30 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './ContentForm.css';
 
 const ContentForm = ({ initialData, onSubmit, submitText = 'Guardar' }) => {
-  const [formData, setFormData] = useState(initialData || {
+  const [formData, setFormData] = useState(() => initialData || {
     titulo: '',
     director: '',
     anio: '',
     genero: '',
     rating: '',
     tipo: 'Película',
-    vista: false
+    vista: false,
+    imagen: null
   });
+
+  const [previewUrl, setPreviewUrl] = useState(() => 
+    initialData?.imagen ? URL.createObjectURL(initialData.imagen) : null
+  );
+
+  // Solo efecto de limpieza de la URL generada en esta instancia
+  useEffect(() => {
+    return () => {
+      if (previewUrl && previewUrl.startsWith('blob:')) {
+        URL.revokeObjectURL(previewUrl);
+      }
+    };
+  }, [previewUrl]);
 
   const generos = [
     'Acción',
@@ -31,6 +45,14 @@ const ContentForm = ({ initialData, onSubmit, submitText = 'Guardar' }) => {
     });
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData({ ...formData, imagen: file });
+      setPreviewUrl(URL.createObjectURL(file));
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     
@@ -48,6 +70,23 @@ const ContentForm = ({ initialData, onSubmit, submitText = 'Guardar' }) => {
 
   return (
     <form onSubmit={handleSubmit} className="content-form">
+      <div className="form-group">
+        <label htmlFor="imagen">Imagen (Poster)</label>
+        <input
+          type="file"
+          id="imagen"
+          name="imagen"
+          accept="image/*"
+          onChange={handleImageChange}
+          className="file-input"
+        />
+        {previewUrl && (
+          <div className="image-preview">
+            <img src={previewUrl} alt="Vista previa" />
+          </div>
+        )}
+      </div>
+
       <div className="form-group">
         <label htmlFor="titulo">Título</label>
         <input
