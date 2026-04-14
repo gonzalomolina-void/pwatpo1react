@@ -15,6 +15,8 @@ const Home = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedGenre, setSelectedGenre] = useState('');
   const [selectedType, setSelectedType] = useState('');
+  const [sortBy, setSortBy] = useState('');
+  const [sortOrder, setSortOrder] = useState('desc');
 
   const generos = [
     'Acción',
@@ -76,8 +78,8 @@ const Home = () => {
     
     const filtered = contenido.filter(item => {
       const matchesSearch = term === '' || 
-        item.titulo.toLowerCase().includes(term) || 
-        item.director.toLowerCase().includes(term);
+        (item.titulo?.toLowerCase().includes(term)) || 
+        (item.director?.toLowerCase().includes(term));
       
       const matchesGenre = selectedGenre === '' || item.genero === selectedGenre;
       const matchesType = selectedType === '' || item.tipo === selectedType;
@@ -85,11 +87,30 @@ const Home = () => {
       return matchesSearch && matchesGenre && matchesType;
     });
 
+    // Ordenar según sortBy / sortOrder
+    const sorted = [...filtered];
+    if (sortBy) {
+      sorted.sort((a, b) => {
+        // Ajustá las propiedades ('anio' y 'rating') si tus items usan otros nombres (p.ej. 'year', 'puntaje')
+        const key = sortBy === 'anio' ? 'anio' : 'rating';
+        const va = a[key] ?? 0;
+        const vb = b[key] ?? 0;
+
+        // asegúrate que sean números para comparar
+        const na = typeof va === 'string' ? Number(va) : va;
+        const nb = typeof vb === 'string' ? Number(vb) : vb;
+
+        if (na < nb) return sortOrder === 'asc' ? -1 : 1;
+        if (na > nb) return sortOrder === 'asc' ? 1 : -1;
+        return 0;
+      });
+    }
+
     return {
-      porVer: filtered.filter(item => !item.vista),
-      vistas: filtered.filter(item => item.vista)
+      porVer: sorted.filter(item => !item.vista),
+      vistas: sorted.filter(item => item.vista)
     };
-  }, [contenido, searchTerm, selectedGenre, selectedType]);
+  }, [contenido, searchTerm, selectedGenre, selectedType, sortBy, sortOrder]);
 
   const isFiltering = searchTerm.trim() !== '' || selectedGenre !== '' || selectedType !== '';
 
@@ -132,6 +153,26 @@ const Home = () => {
               <option value="Película">Películas</option>
               <option value="Serie">Series</option>
             </select>
+
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="filter-select"
+            >
+              <option value="">Sin ordenar</option>
+              <option value="anio">Año</option>
+              <option value="rating">Rating</option>
+            </select>
+
+            <select
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value)}
+              className="filter-select"
+            >
+              <option value="desc">Descendente</option>
+              <option value="asc">Ascendente</option>
+            </select>
+
           </div>
         </div>
 
