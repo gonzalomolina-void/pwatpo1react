@@ -10,7 +10,9 @@ const Modal = ({ isOpen, onClose, title, children }) => {
           &times;
         </button>
         {title && <h3>{title}</h3>}
-        {children}
+        <div className="modal-body">
+          {children}
+        </div>
       </section>
     </div>
   );
