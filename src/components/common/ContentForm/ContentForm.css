@@ -79,6 +79,30 @@
   background-color: #535bf2;
 }
 
+/* Mejoras para dispositivos móviles */
+@media (max-width: 600px) {
+  .submit-btn {
+    position: sticky;
+    bottom: -0.5rem;
+    margin-bottom: -1rem;
+    padding: 1rem;
+    z-index: 5;
+    background-color: #646cff; /* Asegurar color opaco */
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
+    width: calc(100% + 1rem); /* Un poco más ancho para cubrir el padding del modal */
+    margin-left: -0.5rem;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .image-preview {
+    max-height: 150px;
+  }
+
+  .image-preview img {
+    max-height: 150px;
+  }
+}
+
 /* Estilos para Imagen */
 .file-input {
   padding: 0.5rem 0;
