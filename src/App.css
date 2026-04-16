@@ -1,6 +1,7 @@
 /* Limpieza inicial de estilos globales del App */
 .App {
   min-height: 100vh;
-  background-color: #242424;
-  color: white;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  transition: background-color 0.3s, color 0.3s;
 }

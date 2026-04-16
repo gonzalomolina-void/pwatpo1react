@@ -4,7 +4,7 @@ import FormularioAgregar from '../../components/FormularioAgregar/FormularioAgre
 import FormularioEditar from '../../components/FormularioEditar/FormularioEditar';
 import ListaContenido from '../../components/ListaContenido/ListaContenido';
 import ResumenEstadisticas from '../../components/ResumenEstadisticas/ResumenEstadisticas';
-import SearchBar from '../../components/common/SearchBar/SearchBar';
+import SearchBar from '../../components/SearchBar/SearchBar';
 import storageService from '../../services/storageService';
 import './Home.css';
 
@@ -81,7 +81,8 @@ const Home = () => {
         (item.titulo?.toLowerCase().includes(term)) || 
         (item.director?.toLowerCase().includes(term));
       
-      const matchesGenre = selectedGenre === '' || item.genero === selectedGenre;
+      const matchesGenre = selectedGenre === '' || 
+        (Array.isArray(item.generos) ? item.generos.includes(selectedGenre) : item.genero === selectedGenre);
       const matchesType = selectedType === '' || item.tipo === selectedType;
 
       return matchesSearch && matchesGenre && matchesType;

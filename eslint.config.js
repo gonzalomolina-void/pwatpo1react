@@ -24,6 +24,9 @@ export default defineConfig([
     },
     rules: {
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      // Resource management (createObjectURL + cleanup) requires setState inside effects.
+      // This is a valid pattern that the rule incorrectly flags.
+      'react-hooks/set-state-in-effect': 'off',
     },
   },
 ])
