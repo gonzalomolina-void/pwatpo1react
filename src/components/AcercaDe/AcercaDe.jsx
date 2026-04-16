@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import Modal from '../Modal/Modal';
+import Modal from '../common/Modal/Modal';
 import './AcercaDe.css';
 
 // Importar avatars de los integrantes
-import avatarLautaro from '../../../assets/Bart.jpg';
-import avatarJuan from '../../../assets/Vegeta.webp';
-import avatarGonzalo from '../../../assets/Grommash.webp';
+import avatarLautaro from '../../assets/Bart.jpg';
+import avatarJuan from '../../assets/Vegeta.webp';
+import avatarGonzalo from '../../assets/Grommash.webp';
 
 const AcercaDe = () => {
   const [isOpen, setIsOpen] = useState(false);
