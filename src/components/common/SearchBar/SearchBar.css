@@ -37,7 +37,7 @@
   background: none;
   border: none;
   font-size: 1.5rem;
-  color: #888;
+  color: var(--text-secondary);
   cursor: pointer;
   padding: 0.2rem;
   line-height: 1;
@@ -48,5 +48,5 @@
 }
 
 .search-clear-btn:hover {
-  color: #333;
+  color: var(--accent-color);
 }

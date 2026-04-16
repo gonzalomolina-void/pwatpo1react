@@ -1,0 +1,141 @@
+.acerca-de-container {
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 1000;
+}
+
+.acerca-de-btn {
+  background-color: var(--container-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  font-size: 1.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px var(--card-shadow);
+  transition: all 0.3s ease;
+}
+
+.acerca-de-btn:hover {
+  transform: scale(1.1);
+  border-color: var(--accent-color);
+}
+
+.acerca-de-content {
+  text-align: center;
+  color: var(--text-primary);
+  padding: 0.5rem;
+}
+
+.acerca-de-subtitle {
+  margin-bottom: 2rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.integrantes-grid {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 1rem 0;
+  flex-wrap: wrap;
+}
+
+.integrante-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 1rem;
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px var(--card-shadow);
+  width: 160px; /* Ancho fijo para las cards */
+  flex-shrink: 0;
+}
+
+.avatar-wrapper {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--accent-color);
+  box-shadow: 0 0 8px var(--accent-color);
+}
+
+.integrante-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.integrante-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  text-align: center;
+}
+
+.integrante-info strong {
+  font-size: 0.9rem;
+  line-height: 1.2;
+}
+
+.integrante-info span {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.rol-badge {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  padding: 4px 12px;
+  background-color: #bfdbfe; /* Un azul más oscuro y legible para mejor contraste */
+  color: #ffffff;
+  border-radius: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.proyecto-info {
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border-color);
+  padding-top: 1rem;
+}
+
+/* Ajuste para pantallas pequeñas */
+@media (max-width: 600px) {
+  .acerca-de-container {
+    top: 1rem;
+    left: 1rem;
+  }
+  
+  .acerca-de-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+  }
+
+  .integrantes-grid {
+    flex-direction: row; /* Mantener horizontal si es posible */
+    gap: 1rem;
+  }
+
+  .integrante-card {
+    width: 140px;
+    padding: 1rem;
+  }
+}

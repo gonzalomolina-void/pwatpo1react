@@ -81,7 +81,8 @@ const Home = () => {
         (item.titulo?.toLowerCase().includes(term)) || 
         (item.director?.toLowerCase().includes(term));
       
-      const matchesGenre = selectedGenre === '' || item.genero === selectedGenre;
+      const matchesGenre = selectedGenre === '' || 
+        (Array.isArray(item.generos) ? item.generos.includes(selectedGenre) : item.genero === selectedGenre);
       const matchesType = selectedType === '' || item.tipo === selectedType;
 
       return matchesSearch && matchesGenre && matchesType;

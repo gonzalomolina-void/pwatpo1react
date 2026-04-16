@@ -39,12 +39,25 @@
   letter-spacing: 0.05em;
 }
 
+.generos-badges-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  max-width: 250px;
+}
+
 .item-genero {
-  background-color: var(--border-color);
-  padding: 0.2rem 0.6rem;
-  border-radius: 4px;
-  font-size: 0.85rem;
-  color: var(--text-primary);
+  display: inline-block;
+  background-color: var(--table-header-bg);
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 
 .item-rating {
@@ -53,22 +66,30 @@
 }
 
 .acciones-celda {
-  display: table-cell;
+  width: 120px;
+  text-align: center;
 }
 
-.acciones-celda div {
+.acciones-buttons {
   display: flex;
   gap: 0.5rem;
+  justify-content: center;
   align-items: center;
 }
 
 .btn-toggle, .btn-delete, .btn-edit {
-  padding: 0.4rem 0.8rem;
-  border-radius: 4px;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: 8px;
   border: 1px solid transparent;
   cursor: pointer;
-  font-size: 0.85rem;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.2s;
+  box-shadow: 0 2px 4px var(--card-shadow);
 }
 
 .btn-toggle {
@@ -100,52 +121,32 @@
 
 .mensaje-vacio-container {
   padding: 2rem;
-  background-color: #f9f9f9;
+  background-color: var(--table-header-bg);
   border-radius: 8px;
-  border: 1px dashed #ccc;
+  border: 1px dashed var(--border-color);
   text-align: center;
 }
 
 .mensaje-vacio {
-  color: #666;
+  color: var(--text-secondary);
   font-style: italic;
   margin-bottom: 1rem;
 }
 
 .btn-clear-filters {
   background: none;
-  border: 1px solid #646cff;
-  color: #646cff;
+  border: 1px solid var(--accent-color);
+  color: var(--accent-color);
   padding: 0.4rem 1rem;
   border-radius: 4px;
   cursor: pointer;
 }
 
 .btn-clear-filters:hover {
-  background-color: #646cff11;
+  background-color: var(--accent-hover);
+  color: white;
 }
 
-/* Estilos para Posters */
 .poster-celda {
-  width: 80px;
-  padding: 0.5rem !important;
-}
-
-.poster-miniatura {
-  width: 60px;
-  object-fit: cover;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-  display: block;
-}
-
-.sin-poster {
-  width: 60px;
-  background-color: #eee;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.7rem;
-  color: #999;
-  border-radius: 4px;
+  width: 70px;
 }

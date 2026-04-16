@@ -14,10 +14,11 @@
 }
 
 .modal-content {
-  background-color: #fff;
+  background-color: var(--container-bg);
+  color: var(--text-primary);
   padding: 1.5rem;
   border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 25px var(--card-shadow);
   max-width: 500px;
   width: 90%;
   max-height: 90vh;
@@ -31,6 +32,7 @@
   overflow-y: auto;
   flex-grow: 1;
   padding-top: 0.5rem;
+  color: var(--text-primary);
   /* Ocultar barra de scroll visualmente pero mantener funcionalidad */
   -ms-overflow-style: none;  /* IE y Edge */
   scrollbar-width: none;  /* Firefox */
@@ -59,21 +61,21 @@
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-  color: #888;
+  color: var(--text-secondary);
   transition: color 0.2s;
   z-index: 10;
 }
 
 .close-btn:hover {
-  color: #333;
+  color: var(--accent-color);
 }
 
 .modal-content h3 {
   margin-top: 0;
   margin-bottom: 1rem;
-  color: #333;
+  color: var(--text-primary);
   text-align: left;
-  border-bottom: 2px solid #f0f0f0;
+  border-bottom: 2px solid var(--border-color);
   padding-bottom: 0.5rem;
   flex-shrink: 0;
 }

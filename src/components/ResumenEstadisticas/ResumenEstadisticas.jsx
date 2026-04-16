@@ -5,12 +5,15 @@ const ResumenEstadisticas = ({ contenido }) => {
   const vistos = contenido.filter(item => item.vista).length;
 
   const conteoGeneros = contenido.reduce((acumulador, item) => {
-    const genero = item.genero;
-    if (acumulador[genero]) {
-      acumulador[genero] += 1;
-    } else {
-      acumulador[genero] = 1;
-    }
+    const itemGeneros = Array.isArray(item.generos) ? item.generos : (item.genero ? [item.genero] : []);
+    
+    itemGeneros.forEach(genero => {
+      if (acumulador[genero]) {
+        acumulador[genero] += 1;
+      } else {
+        acumulador[genero] = 1;
+      }
+    });
     return acumulador;
   }, {});
 

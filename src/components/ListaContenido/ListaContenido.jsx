@@ -1,34 +1,6 @@
-import { useState, useEffect } from 'react';
+//import { useState, useEffect } from 'react';
+import PosterImage from '../common/PosterImage/PosterImage';
 import './ListaContenido.css';
-
-const PosterImage = ({ blob, alt }) => {
-  const [url, setUrl] = useState(null);
-
-  useEffect(() => {
-    // Si no hay blob, limpiar URL y salir
-    if (!blob) {
-      queueMicrotask(() => setUrl(null));
-      return;
-    }
-
-    // Generar la URL
-    const newUrl = URL.createObjectURL(blob);
-    
-    // Usar una microtarea para evitar el renderizado en cascada síncrono
-    // que el linter está detectando.
-    queueMicrotask(() => {
-      setUrl(newUrl);
-    });
-
-    return () => {
-      URL.revokeObjectURL(newUrl);
-    };
-  }, [blob]);
-
-  if (!url) return <div className="sin-poster">N/A</div>;
-
-  return <img src={url} alt={alt} className="poster-miniatura" />;
-};
 
 const ListaContenido = ({ titulo, items, onToggle, onDelete, onEdit, emptyMessage, onClearFilters, isFiltering }) => {
   return (
@@ -71,33 +43,41 @@ const ListaContenido = ({ titulo, items, onToggle, onDelete, onEdit, emptyMessag
                 <td>{item.anio}</td>
                 <td>{item.director}</td>
                 <td>
-                  <span className="item-genero">{item.genero}</span>
+                  <div className="generos-badges-container">
+                    {(Array.isArray(item.generos) ? item.generos : [item.genero || 'S/G']).map((g, idx) => (
+                      <span key={idx} className="item-genero">{g}</span>
+                    ))}
+                  </div>
                 </td>
                 <td className="item-rating">{item.rating}</td>
-                <td className="acciones-celda"><div>
-                  <button
-                    className="btn-toggle"
-                    onClick={() => onToggle(item)}
-                  >
-                    {item.vista ? 'Pendiente' : 'Visto'}
-                  </button>
-                  <button
-                    className="btn-edit"
-                    onClick={() => onEdit(item)}
-                  >
-                    Editar
-                  </button>
-                  <button
-                    className="btn-delete"
-                    onClick={() => onDelete(item.id)}
-                  >
-                    Eliminar
-                  </button></div>
+                <td className="acciones-celda">
+                  <div className="acciones-buttons">
+                    <button
+                      className="btn-toggle"
+                      onClick={() => onToggle(item)}
+                      title={item.vista ? 'Marcar como pendiente' : 'Marcar como visto'}
+                    >
+                      {item.vista ? '⏳' : '✅'}
+                    </button>
+                    <button
+                      className="btn-edit"
+                      onClick={() => onEdit(item)}
+                      title="Editar contenido"
+                    >
+                      ✏️
+                    </button>
+                    <button
+                      className="btn-delete"
+                      onClick={() => onDelete(item.id)}
+                      title="Eliminar contenido"
+                    >
+                      🗑️
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}
           </tbody>
-
         </table>
       )}
     </div>
