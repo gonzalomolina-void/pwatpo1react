@@ -33,10 +33,35 @@
 }
 
 .acerca-de-subtitle {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   color: var(--text-secondary);
   font-size: 0.9rem;
   font-style: italic;
+}
+
+.acerca-de-quote {
+  margin: 0 auto 2rem;
+  padding: 1rem 1.5rem;
+  max-width: 400px;
+  border-left: 4px solid var(--accent-color);
+  background-color: var(--bg-color);
+  font-family: serif; /* Le da un toque clásico */
+}
+
+.acerca-de-quote p {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+  font-style: italic;
+  color: var(--text-primary);
+}
+
+.acerca-de-quote cite {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: bold;
+  display: block;
+  text-align: right;
 }
 
 .integrantes-grid {

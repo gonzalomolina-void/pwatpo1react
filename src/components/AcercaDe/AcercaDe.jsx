@@ -56,6 +56,12 @@ const AcercaDe = () => {
       >
         <div className="acerca-de-content">
           <p className="acerca-de-subtitle">Proyecto desarrollado para la cátedra de Programación Web Avanzada.</p>
+          
+          <blockquote className="acerca-de-quote">
+            <p>"No es que tengamos poco tiempo, sino que perdemos mucho."</p>
+            <cite>— Séneca</cite>
+          </blockquote>
+
           <div className="integrantes-grid">
             {integrantes.map((i, index) => (
               <div key={index} className="integrante-card">
