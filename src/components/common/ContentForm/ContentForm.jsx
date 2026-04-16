@@ -1,32 +1,32 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import './ContentForm.css';
+import PosterImage from '../PosterImage/PosterImage';
 
 const ContentForm = ({ initialData, onSubmit, submitText = 'Guardar' }) => {
-  const [formData, setFormData] = useState(() => initialData || {
-    titulo: '',
-    director: '',
-    anio: '',
-    genero: '',
-    rating: '',
-    tipo: 'Película',
-    vista: false,
-    imagen: null
-  });
-
-  const [previewUrl, setPreviewUrl] = useState(() => 
-    initialData?.imagen ? URL.createObjectURL(initialData.imagen) : null
-  );
-
-  // Solo efecto de limpieza de la URL generada en esta instancia
-  useEffect(() => {
-    return () => {
-      if (previewUrl && previewUrl.startsWith('blob:')) {
-        URL.revokeObjectURL(previewUrl);
-      }
+  // Normalizar datos iniciales: si tiene 'genero' (string), pasarlo a 'generos' (array)
+  const getInitialState = () => {
+    if (initialData) {
+      const { genero, generos, ...rest } = initialData;
+      return {
+        ...rest,
+        generos: generos || (genero ? [genero] : [])
+      };
+    }
+    return {
+      titulo: '',
+      director: '',
+      anio: '',
+      generos: [],
+      rating: '',
+      tipo: 'Película',
+      vista: false,
+      imagen: null
     };
-  }, [previewUrl]);
+  };
 
-  const generos = [
+  const [formData, setFormData] = useState(getInitialState);
+
+  const listaGeneros = [
     'Acción',
     'Comedia',
     'Drama',
@@ -45,19 +45,29 @@ const ContentForm = ({ initialData, onSubmit, submitText = 'Guardar' }) => {
     });
   };
 
+  const handleGenreChange = (genero) => {
+    const nuevosGeneros = formData.generos.includes(genero)
+      ? formData.generos.filter(g => g !== genero)
+      : [...formData.generos, genero];
+    
+    setFormData({
+      ...formData,
+      generos: nuevosGeneros
+    });
+  };
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setFormData({ ...formData, imagen: file });
-      setPreviewUrl(URL.createObjectURL(file));
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    if (!formData.titulo || !formData.director || !formData.anio || !formData.genero || !formData.rating) {
-      alert('Por favor, completa todos los campos.');
+    if (!formData.titulo || !formData.director || !formData.anio || formData.generos.length === 0 || !formData.rating) {
+      alert('Por favor, completa todos los campos (al menos un género).');
       return;
     }
 
@@ -71,18 +81,49 @@ const ContentForm = ({ initialData, onSubmit, submitText = 'Guardar' }) => {
   return (
     <form onSubmit={handleSubmit} className="content-form">
       <div className="form-group">
-        <label htmlFor="imagen">Imagen (Poster)</label>
-        <input
-          type="file"
-          id="imagen"
-          name="imagen"
-          accept="image/*"
-          onChange={handleImageChange}
-          className="file-input"
-        />
-        {previewUrl && (
-          <div className="image-preview">
-            <img src={previewUrl} alt="Vista previa" />
+        <label>Imagen (Poster)</label>
+        <div className="image-upload-container">
+          <input
+            type="file"
+            id="imagen"
+            name="imagen"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="file-input-hidden"
+            hidden
+          />
+          <label htmlFor="imagen" className="image-upload-placeholder">
+            {formData.imagen && formData.imagen instanceof Blob ? (
+              <div className="preview-with-overlay">
+                <PosterImage blob={formData.imagen} alt="Vista previa" className="form-preview-img" />
+                <div className="change-image-overlay">Cambiar Imagen</div>
+              </div>
+            ) : (
+              <div className="placeholder-content">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="48"
+                  height="48"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="placeholder-icon"
+                >
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                  <circle cx="8.5" cy="8.5" r="1.5" />
+                  <polyline points="21 15 16 10 5 21" />
+                </svg>
+                <span>Haga clic para subir poster</span>
+              </div>
+            )}
+          </label>
+        </div>
+        {formData.imagen && !(formData.imagen instanceof Blob) && (
+          <div className="image-preview error-preview">
+            <p>La imagen guardada no es válida o está dañada.</p>
           </div>
         )}
       </div>
@@ -142,23 +183,23 @@ const ContentForm = ({ initialData, onSubmit, submitText = 'Guardar' }) => {
         </div>
       </div>
 
-      <div className="form-row">
-        <div className="form-group">
-          <label htmlFor="genero">Género</label>
-          <select
-            id="genero"
-            name="genero"
-            value={formData.genero}
-            onChange={handleChange}
-            required
-          >
-            <option value="" disabled>Selecciona uno</option>
-            {generos.map((g) => (
-              <option key={g} value={g}>{g}</option>
-            ))}
-          </select>
+      <div className="form-group">
+        <label>Géneros</label>
+        <div className="generos-checkbox-grid">
+          {listaGeneros.map((g) => (
+            <label key={g} className="genre-checkbox-label">
+              <input
+                type="checkbox"
+                checked={formData.generos.includes(g)}
+                onChange={() => handleGenreChange(g)}
+              />
+              {g}
+            </label>
+          ))}
         </div>
+      </div>
 
+      <div className="form-row">
         <div className="form-group">
           <label htmlFor="tipo">Tipo</label>
           <div className="radio-group">
@@ -184,18 +225,18 @@ const ContentForm = ({ initialData, onSubmit, submitText = 'Guardar' }) => {
             </label>
           </div>
         </div>
-      </div>
 
-      <div className="form-group checkbox-group">
-        <label className="checkbox-label">
-          <input
-            type="checkbox"
-            name="vista"
-            checked={formData.vista}
-            onChange={handleChange}
-          />
-          ¿Ya lo has visto?
-        </label>
+        <div className="form-group checkbox-group centered-checkbox">
+          <label className="checkbox-label">
+            <input
+              type="checkbox"
+              name="vista"
+              checked={formData.vista}
+              onChange={handleChange}
+            />
+            ¿Ya lo has visto?
+          </label>
+        </div>
       </div>
 
       <button type="submit" className="submit-btn">
