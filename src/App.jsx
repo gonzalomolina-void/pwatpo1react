@@ -5,9 +5,9 @@ import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <AcercaDe />
+    <div className="App">      
       <ThemeToggle />
+      <AcercaDe />
       <Home />
     </div>
   );
