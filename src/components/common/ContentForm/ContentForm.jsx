@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { GENEROS } from '../../../constants/generos';
+import { TIPO_CONTENIDO } from '../../../constants/tipos';
 import './ContentForm.css';
 import PosterImage from '../PosterImage/PosterImage';
 
@@ -18,24 +20,13 @@ const ContentForm = ({ initialData, onSubmit, submitText = 'Guardar' }) => {
       anio: '',
       generos: [],
       rating: '',
-      tipo: 'Película',
+      tipo: TIPO_CONTENIDO.PELICULA,
       vista: false,
       imagen: null
     };
   };
 
   const [formData, setFormData] = useState(getInitialState);
-
-  const listaGeneros = [
-    'Acción',
-    'Comedia',
-    'Drama',
-    'Ciencia Ficción',
-    'Terror',
-    'Romance',
-    'Documental',
-    'Animación'
-  ];
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -186,7 +177,7 @@ const ContentForm = ({ initialData, onSubmit, submitText = 'Guardar' }) => {
       <div className="form-group">
         <label>Géneros</label>
         <div className="generos-checkbox-grid">
-          {listaGeneros.map((g) => (
+          {GENEROS.map((g) => (
             <label key={g} className="genre-checkbox-label">
               <input
                 type="checkbox"
@@ -207,8 +198,8 @@ const ContentForm = ({ initialData, onSubmit, submitText = 'Guardar' }) => {
               <input
                 type="radio"
                 name="tipo"
-                value="Película"
-                checked={formData.tipo === 'Película'}
+                value={TIPO_CONTENIDO.PELICULA}
+                checked={formData.tipo === TIPO_CONTENIDO.PELICULA}
                 onChange={handleChange}
               />
               Película
@@ -217,8 +208,8 @@ const ContentForm = ({ initialData, onSubmit, submitText = 'Guardar' }) => {
               <input
                 type="radio"
                 name="tipo"
-                value="Serie"
-                checked={formData.tipo === 'Serie'}
+                value={TIPO_CONTENIDO.SERIE}
+                checked={formData.tipo === TIPO_CONTENIDO.SERIE}
                 onChange={handleChange}
               />
               Serie

@@ -30,13 +30,7 @@ const AcercaDe = () => {
       rol: 'PM',
       avatar: avatarGonzalo
     }
-  ].sort((a, b) => {
-    // Ordenar por el último nombre (apellido)
-    const apellidoA = a.nombre.split(' ').pop();
-    const apellidoB = b.nombre.split(' ').pop();
-    return apellidoA.localeCompare(apellidoB);
-  });
-
+  ];
 
   return (
     <div className="acerca-de-container">
