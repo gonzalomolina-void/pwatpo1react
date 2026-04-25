@@ -15,6 +15,7 @@ const ListaContenido = ({ titulo, items, onToggle, onDelete, onEdit, emptyMessag
             <button
               className="btn-clear-filters"
               onClick={onClearFilters}
+              aria-label="Limpiar todos los filtros aplicados"
             >
               Limpiar filtros
             </button>
@@ -37,16 +38,17 @@ const ListaContenido = ({ titulo, items, onToggle, onDelete, onEdit, emptyMessag
             {items.map(item => (
               <tr key={item.id}>
                 <td className="poster-celda">
-                  <PosterImage blob={item.imagen} alt={item.titulo} />
+                  <PosterImage blob={item.imagen} alt={`Poster de ${item.titulo}`} />
                 </td>
                 <td>{item.titulo}</td>
                 <td>{item.anio}</td>
                 <td>{item.director}</td>
                 <td>
                   <div className="generos-badges-container">
-                    {(Array.isArray(item.generos) ? item.generos : [item.genero || 'S/G']).map((g, idx) => (
+                    {item.generos.map((g, idx) => (
                       <span key={idx} className="item-genero">{g}</span>
                     ))}
+                    {item.generos.length === 0 && <span className="item-genero">S/G</span>}
                   </div>
                 </td>
                 <td className="item-rating">{item.rating}</td>
@@ -56,6 +58,7 @@ const ListaContenido = ({ titulo, items, onToggle, onDelete, onEdit, emptyMessag
                       className="btn-toggle"
                       onClick={() => onToggle(item)}
                       title={item.vista ? 'Marcar como pendiente' : 'Marcar como visto'}
+                      aria-label={item.vista ? 'Marcar como pendiente de ver' : 'Marcar como visto'}
                     >
                       {item.vista ? '⏳' : '✅'}
                     </button>
@@ -63,6 +66,7 @@ const ListaContenido = ({ titulo, items, onToggle, onDelete, onEdit, emptyMessag
                       className="btn-edit"
                       onClick={() => onEdit(item)}
                       title="Editar contenido"
+                      aria-label={`Editar detalles de ${item.titulo}`}
                     >
                       ✏️
                     </button>
@@ -70,6 +74,7 @@ const ListaContenido = ({ titulo, items, onToggle, onDelete, onEdit, emptyMessag
                       className="btn-delete"
                       onClick={() => onDelete(item.id)}
                       title="Eliminar contenido"
+                      aria-label={`Eliminar ${item.titulo} de la lista`}
                     >
                       🗑️
                     </button>
